@@ -82,11 +82,30 @@ end
 J+= 0.5 * lambda * (sum(sum(Theta1(:,2:input_layer_size+1).^2)) + sum(sum(Theta2(:,2:hidden_layer_size+1).^2)))/ m;
 
 
+delta_3 = a3 - yk;
+tmp = (Theta2' * delta_3);
+delta_2 = tmp(2:end, :) .* sigmoidGradient(z2');
+
+for i = 1:size(Theta2_grad,1)
+	for j = 1 : size(Theta2_grad,2)
+		if (j>1)
+			Theta2_grad(i,j) = sum(delta_3(i,:).*a2(:,j)')/m + lambda*Theta2(i,j)/m; 
+		else
+			Theta2_grad(i,j) = sum(delta_3(i,:).*a2(:,j)')/m; 
+		end		
+	end
+end
 
 
-
-
-
+for i = 1:size(Theta1_grad,1)
+	for j = 1 : size(Theta1_grad,2)
+		if (j>1)
+			Theta1_grad(i,j) = sum(delta_2(i,:).*a1(:,j)')/m + lambda*Theta1(i,j)/m;
+		else
+			Theta1_grad(i,j) = sum(delta_2(i,:).*a1(:,j)')/m ;
+		end		 
+	end
+end
 
 
 
