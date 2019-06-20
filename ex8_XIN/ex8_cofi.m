@@ -69,92 +69,92 @@ fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
 
-% %% ============== Part 3: Collaborative Filtering Gradient ==============
-% %  Once your cost function matches up with ours, you should now implement 
-% %  the collaborative filtering gradient function. Specifically, you should 
-% %  complete the code in cofiCostFunc.m to return the grad argument.
-% %  
-% fprintf('\nChecking Gradients (without regularization) ... \n');
+%% ============== Part 3: Collaborative Filtering Gradient ==============
+%  Once your cost function matches up with ours, you should now implement 
+%  the collaborative filtering gradient function. Specifically, you should 
+%  complete the code in cofiCostFunc.m to return the grad argument.
+%  
+fprintf('\nChecking Gradients (without regularization) ... \n');
 
-% %  Check gradients by running checkNNGradients
-% checkCostFunction;
+%  Check gradients by running checkNNGradients
+checkCostFunction;
 
-% fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
+fprintf('\nProgram paused. Press enter to continue.\n');
+pause;
 
 
-% %% ========= Part 4: Collaborative Filtering Cost Regularization ========
-% %  Now, you should implement regularization for the cost function for 
-% %  collaborative filtering. You can implement it by adding the cost of
-% %  regularization to the original cost computation.
-% %  
+%% ========= Part 4: Collaborative Filtering Cost Regularization ========
+%  Now, you should implement regularization for the cost function for 
+%  collaborative filtering. You can implement it by adding the cost of
+%  regularization to the original cost computation.
+%  
 
-% %  Evaluate cost function
-% J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
-               % num_features, 1.5);
+%  Evaluate cost function
+J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
+               num_features, 1.5);
            
-% fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
-         % '\n(this value should be about 31.34)\n'], J);
+fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
+         '\n(this value should be about 31.34)\n'], J);
 
-% fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
-
-
-% %% ======= Part 5: Collaborative Filtering Gradient Regularization ======
-% %  Once your cost matches up with ours, you should proceed to implement 
-% %  regularization for the gradient. 
-% %
-
-% %  
-% fprintf('\nChecking Gradients (with regularization) ... \n');
-
-% %  Check gradients by running checkNNGradients
-% checkCostFunction(1.5);
-
-% fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
+fprintf('\nProgram paused. Press enter to continue.\n');
+pause;
 
 
-% %% ============== Part 6: Entering ratings for a new user ===============
-% %  Before we will train the collaborative filtering model, we will first
-% %  add ratings that correspond to a new user that we just observed. This
-% %  part of the code will also allow you to put in your own ratings for the
-% %  movies in our dataset!
-% %
-% movieList = loadMovieList();
+%% ======= Part 5: Collaborative Filtering Gradient Regularization ======
+%  Once your cost matches up with ours, you should proceed to implement 
+%  regularization for the gradient. 
+%
 
-% %  Initialize my ratings
-% my_ratings = zeros(1682, 1);
+%  
+fprintf('\nChecking Gradients (with regularization) ... \n');
 
-% % Check the file movie_idx.txt for id of each movie in our dataset
-% % For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
-% my_ratings(1) = 4;
+%  Check gradients by running checkNNGradients
+checkCostFunction(1.5);
 
-% % Or suppose did not enjoy Silence of the Lambs (1991), you can set
-% my_ratings(98) = 2;
+fprintf('\nProgram paused. Press enter to continue.\n');
+pause;
 
-% % We have selected a few movies we liked / did not like and the ratings we
-% % gave are as follows:
-% my_ratings(7) = 3;
-% my_ratings(12)= 5;
-% my_ratings(54) = 4;
-% my_ratings(64)= 5;
-% my_ratings(66)= 3;
-% my_ratings(69) = 5;
-% my_ratings(183) = 4;
-% my_ratings(226) = 5;
-% my_ratings(355)= 5;
 
-% fprintf('\n\nNew user ratings:\n');
-% for i = 1:length(my_ratings)
-    % if my_ratings(i) > 0 
-        % fprintf('Rated %d for %s\n', my_ratings(i), ...
-                 % movieList{i});
-    % end
-% end
+%% ============== Part 6: Entering ratings for a new user ===============
+%  Before we will train the collaborative filtering model, we will first
+%  add ratings that correspond to a new user that we just observed. This
+%  part of the code will also allow you to put in your own ratings for the
+%  movies in our dataset!
+%
+movieList = loadMovieList();
 
-% fprintf('\nProgram paused. Press enter to continue.\n');
-% pause;
+%  Initialize my ratings
+my_ratings = zeros(1682, 1);
+
+% Check the file movie_idx.txt for id of each movie in our dataset
+% For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
+my_ratings(1) = 4;
+
+% Or suppose did not enjoy Silence of the Lambs (1991), you can set
+my_ratings(98) = 2;
+
+% We have selected a few movies we liked / did not like and the ratings we
+% gave are as follows:
+my_ratings(7) = 3;
+my_ratings(12)= 5;
+my_ratings(54) = 4;
+my_ratings(64)= 5;
+my_ratings(66)= 3;
+my_ratings(69) = 5;
+my_ratings(183) = 4;
+my_ratings(226) = 5;
+my_ratings(355)= 5;
+
+fprintf('\n\nNew user ratings:\n');
+for i = 1:length(my_ratings)
+    if my_ratings(i) > 0 
+        fprintf('Rated %d for %s\n', my_ratings(i), ...
+                 movieList{i});
+    end
+end
+
+fprintf('\nProgram paused. Press enter to continue.\n');
+pause;
 
 
 % %% ================== Part 7: Learning Movie Ratings ====================
