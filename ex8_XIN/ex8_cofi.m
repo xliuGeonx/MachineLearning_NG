@@ -69,169 +69,169 @@ fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
 
-%% ============== Part 3: Collaborative Filtering Gradient ==============
-%  Once your cost function matches up with ours, you should now implement 
-%  the collaborative filtering gradient function. Specifically, you should 
-%  complete the code in cofiCostFunc.m to return the grad argument.
-%  
-fprintf('\nChecking Gradients (without regularization) ... \n');
+% %% ============== Part 3: Collaborative Filtering Gradient ==============
+% %  Once your cost function matches up with ours, you should now implement 
+% %  the collaborative filtering gradient function. Specifically, you should 
+% %  complete the code in cofiCostFunc.m to return the grad argument.
+% %  
+% fprintf('\nChecking Gradients (without regularization) ... \n');
 
-%  Check gradients by running checkNNGradients
-checkCostFunction;
+% %  Check gradients by running checkNNGradients
+% checkCostFunction;
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
-%% ========= Part 4: Collaborative Filtering Cost Regularization ========
-%  Now, you should implement regularization for the cost function for 
-%  collaborative filtering. You can implement it by adding the cost of
-%  regularization to the original cost computation.
-%  
+% %% ========= Part 4: Collaborative Filtering Cost Regularization ========
+% %  Now, you should implement regularization for the cost function for 
+% %  collaborative filtering. You can implement it by adding the cost of
+% %  regularization to the original cost computation.
+% %  
 
-%  Evaluate cost function
-J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
-               num_features, 1.5);
+% %  Evaluate cost function
+% J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
+               % num_features, 1.5);
            
-fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
-         '\n(this value should be about 31.34)\n'], J);
+% fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
+         % '\n(this value should be about 31.34)\n'], J);
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
-
-
-%% ======= Part 5: Collaborative Filtering Gradient Regularization ======
-%  Once your cost matches up with ours, you should proceed to implement 
-%  regularization for the gradient. 
-%
-
-%  
-fprintf('\nChecking Gradients (with regularization) ... \n');
-
-%  Check gradients by running checkNNGradients
-checkCostFunction(1.5);
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
-%% ============== Part 6: Entering ratings for a new user ===============
-%  Before we will train the collaborative filtering model, we will first
-%  add ratings that correspond to a new user that we just observed. This
-%  part of the code will also allow you to put in your own ratings for the
-%  movies in our dataset!
-%
-movieList = loadMovieList();
+% %% ======= Part 5: Collaborative Filtering Gradient Regularization ======
+% %  Once your cost matches up with ours, you should proceed to implement 
+% %  regularization for the gradient. 
+% %
 
-%  Initialize my ratings
-my_ratings = zeros(1682, 1);
+% %  
+% fprintf('\nChecking Gradients (with regularization) ... \n');
 
-% Check the file movie_idx.txt for id of each movie in our dataset
-% For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
-my_ratings(1) = 4;
+% %  Check gradients by running checkNNGradients
+% checkCostFunction(1.5);
 
-% Or suppose did not enjoy Silence of the Lambs (1991), you can set
-my_ratings(98) = 2;
-
-% We have selected a few movies we liked / did not like and the ratings we
-% gave are as follows:
-my_ratings(7) = 3;
-my_ratings(12)= 5;
-my_ratings(54) = 4;
-my_ratings(64)= 5;
-my_ratings(66)= 3;
-my_ratings(69) = 5;
-my_ratings(183) = 4;
-my_ratings(226) = 5;
-my_ratings(355)= 5;
-
-fprintf('\n\nNew user ratings:\n');
-for i = 1:length(my_ratings)
-    if my_ratings(i) > 0 
-        fprintf('Rated %d for %s\n', my_ratings(i), ...
-                 movieList{i});
-    end
-end
-
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 
-%% ================== Part 7: Learning Movie Ratings ====================
-%  Now, you will train the collaborative filtering model on a movie rating 
-%  dataset of 1682 movies and 943 users
-%
+% %% ============== Part 6: Entering ratings for a new user ===============
+% %  Before we will train the collaborative filtering model, we will first
+% %  add ratings that correspond to a new user that we just observed. This
+% %  part of the code will also allow you to put in your own ratings for the
+% %  movies in our dataset!
+% %
+% movieList = loadMovieList();
 
-fprintf('\nTraining collaborative filtering...\n');
+% %  Initialize my ratings
+% my_ratings = zeros(1682, 1);
 
-%  Load data
-load('ex8_movies.mat');
+% % Check the file movie_idx.txt for id of each movie in our dataset
+% % For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
+% my_ratings(1) = 4;
 
-%  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies by 
-%  943 users
-%
-%  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
-%  rating to movie i
+% % Or suppose did not enjoy Silence of the Lambs (1991), you can set
+% my_ratings(98) = 2;
 
-%  Add our own ratings to the data matrix
-Y = [my_ratings Y];
-R = [(my_ratings ~= 0) R];
+% % We have selected a few movies we liked / did not like and the ratings we
+% % gave are as follows:
+% my_ratings(7) = 3;
+% my_ratings(12)= 5;
+% my_ratings(54) = 4;
+% my_ratings(64)= 5;
+% my_ratings(66)= 3;
+% my_ratings(69) = 5;
+% my_ratings(183) = 4;
+% my_ratings(226) = 5;
+% my_ratings(355)= 5;
 
-%  Normalize Ratings
-[Ynorm, Ymean] = normalizeRatings(Y, R);
+% fprintf('\n\nNew user ratings:\n');
+% for i = 1:length(my_ratings)
+    % if my_ratings(i) > 0 
+        % fprintf('Rated %d for %s\n', my_ratings(i), ...
+                 % movieList{i});
+    % end
+% end
 
-%  Useful Values
-num_users = size(Y, 2);
-num_movies = size(Y, 1);
-num_features = 10;
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
-% Set Initial Parameters (Theta, X)
-X = randn(num_movies, num_features);
-Theta = randn(num_users, num_features);
 
-initial_parameters = [X(:); Theta(:)];
+% %% ================== Part 7: Learning Movie Ratings ====================
+% %  Now, you will train the collaborative filtering model on a movie rating 
+% %  dataset of 1682 movies and 943 users
+% %
 
-% Set options for fmincg
-options = optimset('GradObj', 'on', 'MaxIter', 100);
+% fprintf('\nTraining collaborative filtering...\n');
 
-% Set Regularization
-lambda = 10;
-theta = fmincg (@(t)(cofiCostFunc(t, Ynorm, R, num_users, num_movies, ...
-                                num_features, lambda)), ...
-                initial_parameters, options);
+% %  Load data
+% load('ex8_movies.mat');
 
-% Unfold the returned theta back into U and W
-X = reshape(theta(1:num_movies*num_features), num_movies, num_features);
-Theta = reshape(theta(num_movies*num_features+1:end), ...
-                num_users, num_features);
+% %  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies by 
+% %  943 users
+% %
+% %  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
+% %  rating to movie i
 
-fprintf('Recommender system learning completed.\n');
+% %  Add our own ratings to the data matrix
+% Y = [my_ratings Y];
+% R = [(my_ratings ~= 0) R];
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+% %  Normalize Ratings
+% [Ynorm, Ymean] = normalizeRatings(Y, R);
 
-%% ================== Part 8: Recommendation for you ====================
-%  After training the model, you can now make recommendations by computing
-%  the predictions matrix.
-%
+% %  Useful Values
+% num_users = size(Y, 2);
+% num_movies = size(Y, 1);
+% num_features = 10;
 
-p = X * Theta';
-my_predictions = p(:,1) + Ymean;
+% % Set Initial Parameters (Theta, X)
+% X = randn(num_movies, num_features);
+% Theta = randn(num_users, num_features);
 
-movieList = loadMovieList();
+% initial_parameters = [X(:); Theta(:)];
 
-[r, ix] = sort(my_predictions, 'descend');
-fprintf('\nTop recommendations for you:\n');
-for i=1:10
-    j = ix(i);
-    fprintf('Predicting rating %.1f for movie %s\n', my_predictions(j), ...
-            movieList{j});
-end
+% % Set options for fmincg
+% options = optimset('GradObj', 'on', 'MaxIter', 100);
 
-fprintf('\n\nOriginal ratings provided:\n');
-for i = 1:length(my_ratings)
-    if my_ratings(i) > 0 
-        fprintf('Rated %d for %s\n', my_ratings(i), ...
-                 movieList{i});
-    end
-end
+% % Set Regularization
+% lambda = 10;
+% theta = fmincg (@(t)(cofiCostFunc(t, Ynorm, R, num_users, num_movies, ...
+                                % num_features, lambda)), ...
+                % initial_parameters, options);
+
+% % Unfold the returned theta back into U and W
+% X = reshape(theta(1:num_movies*num_features), num_movies, num_features);
+% Theta = reshape(theta(num_movies*num_features+1:end), ...
+                % num_users, num_features);
+
+% fprintf('Recommender system learning completed.\n');
+
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
+
+% %% ================== Part 8: Recommendation for you ====================
+% %  After training the model, you can now make recommendations by computing
+% %  the predictions matrix.
+% %
+
+% p = X * Theta';
+% my_predictions = p(:,1) + Ymean;
+
+% movieList = loadMovieList();
+
+% [r, ix] = sort(my_predictions, 'descend');
+% fprintf('\nTop recommendations for you:\n');
+% for i=1:10
+    % j = ix(i);
+    % fprintf('Predicting rating %.1f for movie %s\n', my_predictions(j), ...
+            % movieList{j});
+% end
+
+% fprintf('\n\nOriginal ratings provided:\n');
+% for i = 1:length(my_ratings)
+    % if my_ratings(i) > 0 
+        % fprintf('Rated %d for %s\n', my_ratings(i), ...
+                 % movieList{i});
+    % end
+% end
